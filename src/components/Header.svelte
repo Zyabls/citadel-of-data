@@ -4,14 +4,13 @@
   let currentPath = window.location.pathname;
   
   function navigate(path) {
-    window.history.pushState({}, '', path);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    window.history.pushState({}, '', '/citadel-of-data' + path);
     currentPath = path;
   }
   
   onMount(() => {
     window.addEventListener('popstate', () => {
-      currentPath = window.location.pathname;
+      currentPath = window.location.pathname.replace('/citadel-of-data', '') || '/';
     });
     
     return () => {
@@ -26,7 +25,7 @@
   <div class="header-container">
     <div class="logo-container">
       <div class="logo" on:click={() => navigate('/')}>
-        <img src="/mnt/data/image.png" alt="Цитадель данных" class="logo-image">
+        <img src="./assets/images/logo.png" alt="Цитадель данных" class="logo-image">
       </div>
     </div>
     <nav>

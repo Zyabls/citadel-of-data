@@ -8,6 +8,7 @@
   import cardImage from './assets/images/card-image-1.png';
   import cardImage_2 from './assets/images/card-image-2.png';
   import cardImage_3 from './assets/images/card-image-3.png';
+  import { onMount } from 'svelte';
 
   // Game cards data
   const gameCards = [
@@ -41,7 +42,19 @@
   }
 
   // Simple routing
-  let currentPath = window.location.pathname;
+  let currentPath = window.location.pathname.replace('/citadel-of-data', '') || '/';
+  
+  // Handle initial load and route changes
+  function handleRouteChange() {
+    currentPath = window.location.pathname.replace('/citadel-of-data', '') || '/';
+  }
+  
+  onMount(() => {
+    window.addEventListener('popstate', handleRouteChange);
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+    };
+  });
 </script>
 
 <svelte:window on:scroll={handleScroll} on:popstate={() => currentPath = window.location.pathname}/>
