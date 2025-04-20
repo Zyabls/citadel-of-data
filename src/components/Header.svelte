@@ -4,20 +4,19 @@
   let currentPath = window.location.pathname;
   
   function navigate(path) {
-    window.history.pushState({}, '', '/citadel-of-data' + path);
+    const fullPath = path === '/' ? '/citadel-of-data' : '/citadel-of-data' + path;
+    window.history.pushState({}, '', fullPath);
     currentPath = path;
   }
   
   onMount(() => {
-    window.addEventListener('popstate', () => {
-      currentPath = window.location.pathname.replace('/citadel-of-data', '') || '/';
-    });
+    const path = window.location.pathname;
+    currentPath = path === '/citadel-of-data' ? '/' : path.replace('/citadel-of-data', '');
     
-    return () => {
-      window.removeEventListener('popstate', () => {
-        currentPath = window.location.pathname;
-      });
-    };
+    window.addEventListener('popstate', () => {
+      const path = window.location.pathname;
+      currentPath = path === '/citadel-of-data' ? '/' : path.replace('/citadel-of-data', '');
+    });
   });
 </script>
 

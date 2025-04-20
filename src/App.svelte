@@ -46,10 +46,12 @@
   
   // Handle initial load and route changes
   function handleRouteChange() {
-    currentPath = window.location.pathname.replace('/citadel-of-data', '') || '/';
+    const path = window.location.pathname;
+    currentPath = path === '/citadel-of-data' ? '/' : path.replace('/citadel-of-data', '');
   }
   
   onMount(() => {
+    handleRouteChange();
     window.addEventListener('popstate', handleRouteChange);
     return () => {
       window.removeEventListener('popstate', handleRouteChange);
